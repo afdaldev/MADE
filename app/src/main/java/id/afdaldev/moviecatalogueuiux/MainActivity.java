@@ -1,31 +1,16 @@
 package id.afdaldev.moviecatalogueuiux;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
-import java.util.Locale;
-import java.util.Objects;
-
 import id.afdaldev.moviecatalogueuiux.adapter.FragmentPagerAdapter;
 import id.afdaldev.moviecatalogueuiux.databinding.ActivityMainBinding;
-import id.afdaldev.moviecatalogueuiux.utils.PrefUtil;
+import id.afdaldev.moviecatalogueuiux.settings.SettingsActivity;
+import id.afdaldev.moviecatalogueuiux.utils.LanguageUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding activityMainBinding;
 
@@ -33,14 +18,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        appLocale(PrefUtil.getLocale(this));
         initView();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        appLocale(PrefUtil.getLocale(this));
+        LanguageUtil.setLocale(this);
     }
 
     private void initView() {
@@ -63,13 +48,5 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void appLocale(String localeCode){
-        Locale locale = new Locale(localeCode);
-        Locale.setDefault(locale);
-        Configuration configuration = getBaseContext().getResources().getConfiguration();
-        configuration.locale = locale;
-        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
     }
 }

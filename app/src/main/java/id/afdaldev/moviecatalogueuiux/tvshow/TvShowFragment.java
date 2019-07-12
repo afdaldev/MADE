@@ -3,18 +3,14 @@ package id.afdaldev.moviecatalogueuiux.tvshow;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
-
 import id.afdaldev.moviecatalogueuiux.R;
 import id.afdaldev.moviecatalogueuiux.databinding.FragmentTvShowBinding;
 import id.afdaldev.moviecatalogueuiux.model.Model;

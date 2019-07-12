@@ -5,15 +5,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
-
 import id.afdaldev.moviecatalogueuiux.R;
 import id.afdaldev.moviecatalogueuiux.databinding.ListItemBinding;
 import id.afdaldev.moviecatalogueuiux.model.Model;
