@@ -37,4 +37,10 @@ public class SettingsFragment extends PreferenceFragment {
         Preference languagePref = findPreference(LANGUAGE_KEY);
         languagePref.setSummary(getPreferenceScreen().getSharedPreferences().getString(LANGUAGE_KEY, ""));
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+    }
 }

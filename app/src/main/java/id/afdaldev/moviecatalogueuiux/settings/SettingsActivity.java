@@ -2,8 +2,11 @@ package id.afdaldev.moviecatalogueuiux.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
+import android.content.Intent;
 import android.os.Bundle;
 
+import id.afdaldev.moviecatalogueuiux.MainActivity;
 import id.afdaldev.moviecatalogueuiux.R;
 import id.afdaldev.moviecatalogueuiux.databinding.ActivitySettingsBinding;
 
@@ -29,7 +32,19 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+        reCreateActivity();
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        reCreateActivity();
+    }
+
+    private void reCreateActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        recreate();
+        startActivity(intent);
     }
 }

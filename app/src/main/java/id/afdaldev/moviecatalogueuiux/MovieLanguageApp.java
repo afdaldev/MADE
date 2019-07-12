@@ -3,7 +3,6 @@ package id.afdaldev.moviecatalogueuiux;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
-
 import id.afdaldev.moviecatalogueuiux.utils.LanguageUtil;
 
 public class MovieLanguageApp extends Application {
