@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        appLocale(PrefUtil.getLocale(this));
         initView();
     }
 
@@ -64,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void appLocale(String localeCodes){
-        Locale locale = new Locale(localeCodes);
+    private void appLocale(String localeCode){
+        Locale locale = new Locale(localeCode);
         Locale.setDefault(locale);
         Configuration configuration = getBaseContext().getResources().getConfiguration();
         configuration.locale = locale;

@@ -5,6 +5,5 @@
         android:title="@string/language"
         android:entries="@array/pref_language_entries"
         android:entryValues="@array/pref_language_values"
-        android:defaultValue="@string/language_default_value"
-        android:summary="@string/language_summary"/>
+        android:defaultValue="@string/language_default_value" />
 </PreferenceScreen>
