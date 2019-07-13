@@ -22,7 +22,7 @@ public class SettingsFragment extends PreferenceFragment {
         preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals(LANGUAGE_KEY)){
+                if (key.equals(LANGUAGE_KEY)) {
                     Preference languagePreference = findPreference(key);
                     languagePreference.setSummary(sharedPreferences.getString(key, ""));
                 }

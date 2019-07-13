@@ -3,14 +3,18 @@ package id.afdaldev.moviecatalogueuiux.movies;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.ArrayList;
+
 import id.afdaldev.moviecatalogueuiux.R;
 import id.afdaldev.moviecatalogueuiux.databinding.FragmentMovieBinding;
 import id.afdaldev.moviecatalogueuiux.model.Model;
@@ -24,10 +28,6 @@ public class MoviesFragment extends Fragment {
     private String[] title;
     private String[] overview;
     private TypedArray imgMovie;
-
-    public MoviesFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,9 +49,9 @@ public class MoviesFragment extends Fragment {
         return fragmentMovieBinding.getRoot();
     }
 
-    private void addItem(){
+    private void addItem() {
         movies = new ArrayList<>();
-        for (int i =0; i < title.length; i++){
+        for (int i = 0; i < title.length; i++) {
             Model model = new Model();
             model.setTitle(title[i]);
             model.setOverview(overview[i]);
@@ -61,7 +61,7 @@ public class MoviesFragment extends Fragment {
         }
     }
 
-    private void prepare(){
+    private void prepare() {
         title = getResources().getStringArray(R.array.data_title_movie);
         overview = getResources().getStringArray(R.array.data_overview_movie);
         imgMovie = getResources().obtainTypedArray(R.array.data_image_movie);
