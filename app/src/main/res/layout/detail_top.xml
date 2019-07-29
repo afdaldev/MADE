@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        app:layout_collapseMode="parallax"
+        tools:showIn="@layout/detail_item">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred_dp"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/poster_dummy" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_poster"
+            android:layout_width="150dp"
+            android:layout_height="190dp"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/one_hundred_dp"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/poster_dummy" />
+
+        <include
+            android:id="@+id/title_section"
+            layout="@layout/title_section"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five_dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_poster"
+            app:layout_constraintTop_toBottomOf="@id/img_backdrop" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
