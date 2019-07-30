@@ -27,7 +27,6 @@ import id.afdaldev.moviecatalogueapi.databinding.FragmentMainBinding;
 public class TVFragment extends Fragment {
 
     private FragmentMainBinding fragmentMainBinding;
-    private TVViewModel tvViewModel;
     private TVAdapter adapter;
     private List<TVShowResponse.Results> tvList = new ArrayList<>();
 
@@ -51,7 +50,7 @@ public class TVFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         showLoading(true);
-        tvViewModel = ViewModelProviders.of(this).get(TVViewModel.class);
+        TVViewModel tvViewModel = ViewModelProviders.of(this).get(TVViewModel.class);
         tvViewModel.init(getActivity());
         tvViewModel.getTV().observe(this, new Observer<TVShowResponse>() {
             @Override

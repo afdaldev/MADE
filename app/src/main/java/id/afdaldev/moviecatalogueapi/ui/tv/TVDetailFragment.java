@@ -19,7 +19,7 @@ import id.afdaldev.moviecatalogueapi.databinding.DetailItemBinding;
 
 public class TVDetailFragment extends Fragment {
 
-    DetailItemBinding detailItemBinding;
+    private DetailItemBinding detailItemBinding;
     public static String TV_KEY = "tv_key";
 
     @Nullable
