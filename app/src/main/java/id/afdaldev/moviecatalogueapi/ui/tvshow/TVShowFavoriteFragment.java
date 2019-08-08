@@ -47,8 +47,8 @@ public class TVShowFavoriteFragment extends Fragment {
             public void onChanged(List<TVShowResponse.Results> results) {
                 tvList.clear();
                 tvList.addAll(results);
-                showLoading(false);
                 tvAdapter.notifyDataSetChanged();
+                showLoading(false);
             }
         });
     }

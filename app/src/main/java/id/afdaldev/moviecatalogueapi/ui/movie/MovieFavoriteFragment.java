@@ -45,8 +45,8 @@ public class MovieFavoriteFragment extends Fragment {
             public void onChanged(List<MovieResponse.Results> results) {
                 movieList.clear();
                 movieList.addAll(results);
-                showLoading(false);
                 movieAdapter.notifyDataSetChanged();
+                showLoading(false);
             }
         });
 
