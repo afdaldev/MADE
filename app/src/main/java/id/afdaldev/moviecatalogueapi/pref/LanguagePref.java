@@ -1,10 +1,8 @@
-package id.afdaldev.moviecatalogueapi.ui;
+package id.afdaldev.moviecatalogueapi.pref;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
-import id.afdaldev.moviecatalogueapi.settings.SettingsFragment;
 
 public class LanguagePref {
 //    public static String getSettings(Context context){

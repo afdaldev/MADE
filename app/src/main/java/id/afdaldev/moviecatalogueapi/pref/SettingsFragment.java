@@ -1,4 +1,4 @@
-package id.afdaldev.moviecatalogueapi.settings;
+package id.afdaldev.moviecatalogueapi.pref;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

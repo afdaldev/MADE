@@ -1,17 +1,19 @@
 package id.afdaldev.moviecatalogueapi.repository;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
+
+import id.afdaldev.moviecatalogueapi.data.local.TmDb;
+import id.afdaldev.moviecatalogueapi.data.local.movie.MovieDao;
 import id.afdaldev.moviecatalogueapi.data.model.MovieResponse;
 import id.afdaldev.moviecatalogueapi.data.remote.Service;
-import id.afdaldev.moviecatalogueapi.settings.SettingsFragment;
-import id.afdaldev.moviecatalogueapi.ui.LanguagePref;
+import id.afdaldev.moviecatalogueapi.pref.LanguagePref;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,5 +39,13 @@ public class MovieRepository {
             }
         });
         return movies;
+    }
+
+    public LiveData<List<MovieResponse.Results>> getAllMoviesFromLocal(Context context) {
+        LiveData<List<MovieResponse.Results>> getMoviesFromLocal;
+        TmDb tmDb = TmDb.getDatabase(context);
+        MovieDao movieDao = tmDb.movieDao();
+        getMoviesFromLocal = movieDao.getAllMovies();
+        return getMoviesFromLocal;
     }
 }

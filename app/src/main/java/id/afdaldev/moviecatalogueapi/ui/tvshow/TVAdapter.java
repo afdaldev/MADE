@@ -1,4 +1,4 @@
-package id.afdaldev.moviecatalogueapi.ui.tv;
+package id.afdaldev.moviecatalogueapi.ui.tvshow;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -75,6 +75,7 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 activity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, tvDetailFragment)
+                        .addToBackStack(null)
                         .commit();
             }
         });

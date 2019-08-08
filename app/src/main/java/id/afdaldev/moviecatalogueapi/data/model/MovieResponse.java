@@ -3,6 +3,9 @@ package id.afdaldev.moviecatalogueapi.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -18,15 +21,45 @@ public class MovieResponse {
     @SerializedName("results")
     private List<Results> results;
 
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getTotalResults() {
+        return totalResults;
+    }
+
+    public void setTotalResults(int totalResults) {
+        this.totalResults = totalResults;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
     public List<Results> getResults() {
         return results;
     }
 
+    public void setResults(List<Results> results) {
+        this.results = results;
+    }
+
+    @Entity(tableName = "movie")
     public static class Results implements Parcelable {
 
         @SerializedName("vote_count")
         private int voteCount;
         @SerializedName("id")
+        @PrimaryKey
         private int id;
         @SerializedName("video")
         private boolean video;
@@ -50,11 +83,13 @@ public class MovieResponse {
         private String overview;
         @SerializedName("release_date")
         private String releaseDate;
-        @SerializedName("genre_ids")
-        private List<Integer> genreIds;
 
         public int getVoteCount() {
             return voteCount;
+        }
+
+        public void setVoteCount(int voteCount) {
+            this.voteCount = voteCount;
         }
 
         public int getId() {
@@ -65,28 +100,92 @@ public class MovieResponse {
             this.id = id;
         }
 
+        public boolean isVideo() {
+            return video;
+        }
+
+        public void setVideo(boolean video) {
+            this.video = video;
+        }
+
         public double getVoteAverage() {
             return voteAverage;
+        }
+
+        public void setVoteAverage(double voteAverage) {
+            this.voteAverage = voteAverage;
         }
 
         public String getTitle() {
             return title;
         }
 
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
         public double getPopularity() {
             return popularity;
+        }
+
+        public void setPopularity(double popularity) {
+            this.popularity = popularity;
         }
 
         public String getPosterPath() {
             return posterPath;
         }
 
+        public void setPosterPath(String posterPath) {
+            this.posterPath = posterPath;
+        }
+
+        public String getOriginalLanguage() {
+            return originalLanguage;
+        }
+
+        public void setOriginalLanguage(String originalLanguage) {
+            this.originalLanguage = originalLanguage;
+        }
+
+        public String getOriginalTitle() {
+            return originalTitle;
+        }
+
+        public void setOriginalTitle(String originalTitle) {
+            this.originalTitle = originalTitle;
+        }
+
         public String getBackdropPath() {
             return backdropPath;
         }
 
+        public void setBackdropPath(String backdropPath) {
+            this.backdropPath = backdropPath;
+        }
+
+        public boolean isAdult() {
+            return adult;
+        }
+
+        public void setAdult(boolean adult) {
+            this.adult = adult;
+        }
+
         public String getOverview() {
             return overview;
+        }
+
+        public void setOverview(String overview) {
+            this.overview = overview;
+        }
+
+        public String getReleaseDate() {
+            return releaseDate;
+        }
+
+        public void setReleaseDate(String releaseDate) {
+            this.releaseDate = releaseDate;
         }
 
         @Override
@@ -96,41 +195,44 @@ public class MovieResponse {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(voteCount);
-            dest.writeInt(id);
-            dest.writeByte((byte) (video ? 1 : 0));
-            dest.writeDouble(voteAverage);
-            dest.writeString(title);
-            dest.writeDouble(popularity);
-            dest.writeString(posterPath);
-            dest.writeString(originalLanguage);
-            dest.writeString(originalTitle);
-            dest.writeString(backdropPath);
-            dest.writeByte((byte) (adult ? 1 : 0));
-            dest.writeString(overview);
-            dest.writeString(releaseDate);
+            dest.writeInt(this.voteCount);
+            dest.writeInt(this.id);
+            dest.writeByte(this.video ? (byte) 1 : (byte) 0);
+            dest.writeDouble(this.voteAverage);
+            dest.writeString(this.title);
+            dest.writeDouble(this.popularity);
+            dest.writeString(this.posterPath);
+            dest.writeString(this.originalLanguage);
+            dest.writeString(this.originalTitle);
+            dest.writeString(this.backdropPath);
+            dest.writeByte(this.adult ? (byte) 1 : (byte) 0);
+            dest.writeString(this.overview);
+            dest.writeString(this.releaseDate);
+        }
+
+        public Results() {
         }
 
         protected Results(Parcel in) {
-            voteCount = in.readInt();
-            id = in.readInt();
-            video = in.readByte() != 0;
-            voteAverage = in.readDouble();
-            title = in.readString();
-            popularity = in.readDouble();
-            posterPath = in.readString();
-            originalLanguage = in.readString();
-            originalTitle = in.readString();
-            backdropPath = in.readString();
-            adult = in.readByte() != 0;
-            overview = in.readString();
-            releaseDate = in.readString();
+            this.voteCount = in.readInt();
+            this.id = in.readInt();
+            this.video = in.readByte() != 0;
+            this.voteAverage = in.readDouble();
+            this.title = in.readString();
+            this.popularity = in.readDouble();
+            this.posterPath = in.readString();
+            this.originalLanguage = in.readString();
+            this.originalTitle = in.readString();
+            this.backdropPath = in.readString();
+            this.adult = in.readByte() != 0;
+            this.overview = in.readString();
+            this.releaseDate = in.readString();
         }
 
-        public static final Creator<Results> CREATOR = new Creator<Results>() {
+        public static final Parcelable.Creator<Results> CREATOR = new Parcelable.Creator<Results>() {
             @Override
-            public Results createFromParcel(Parcel in) {
-                return new Results(in);
+            public Results createFromParcel(Parcel source) {
+                return new Results(source);
             }
 
             @Override

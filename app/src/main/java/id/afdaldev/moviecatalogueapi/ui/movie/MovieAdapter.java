@@ -76,6 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 activity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, movieDetailFragment)
+                        .addToBackStack(null)
                         .commit();
             }
         });

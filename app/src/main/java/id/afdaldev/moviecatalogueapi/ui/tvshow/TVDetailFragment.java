@@ -1,4 +1,4 @@
-package id.afdaldev.moviecatalogueapi.ui.movie;
+package id.afdaldev.moviecatalogueapi.ui.tvshow;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,17 +20,17 @@ import com.bumptech.glide.Glide;
 
 import id.afdaldev.moviecatalogueapi.R;
 import id.afdaldev.moviecatalogueapi.common.Constants;
-import id.afdaldev.moviecatalogueapi.data.local.movie.MovieDao;
 import id.afdaldev.moviecatalogueapi.data.local.TmDb;
-import id.afdaldev.moviecatalogueapi.data.model.MovieResponse;
+import id.afdaldev.moviecatalogueapi.data.local.tvshow.TVShowDao;
+import id.afdaldev.moviecatalogueapi.data.model.TVShowResponse;
 import id.afdaldev.moviecatalogueapi.databinding.DetailItemBinding;
 
-public class MovieDetailFragment extends Fragment {
+public class TVDetailFragment extends Fragment {
 
     private DetailItemBinding detailItemBinding;
-    public static String MOVIE_KEY = "movie_key";
+    public static String TV_KEY = "tv_key";
 
-    private MovieResponse.Results movies;
+    private TVShowResponse.Results tvShow;
     private TmDb tmDb;
     private boolean isFavorite = false;
 
@@ -40,8 +40,7 @@ public class MovieDetailFragment extends Fragment {
         detailItemBinding = DataBindingUtil.inflate(inflater, R.layout.detail_item, container, false);
 
         tmDb = TmDb.getDatabase(getActivity());
-
-        getMovieDetail();
+        getTVDetail();
         setHasOptionsMenu(true);
         return detailItemBinding.getRoot();
     }
@@ -49,30 +48,9 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(movies.getTitle());
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(tvShow.getName());
 
-        isMovieFavorite(movies.getId());
-    }
-
-    private void getMovieDetail() {
-        detailItemBinding.pbDetail.setVisibility(View.VISIBLE);
-        Bundle bundle = getArguments();
-        movies = bundle.getParcelable(MOVIE_KEY);
-        detailItemBinding.pbDetail.setVisibility(View.GONE);
-        //Top
-        detailItemBinding.detailTop.titleSection.tvTitle.setText(movies.getTitle());
-        detailItemBinding.detailTop.titleSection.ratingBar.setRating(Float.parseFloat(String.valueOf(Double.valueOf(movies.getVoteAverage() / 2))));
-        detailItemBinding.detailTop.titleSection.chipPopularity.setText(String.valueOf(movies.getPopularity()));
-        detailItemBinding.detailTop.titleSection.chipVote.setText(String.valueOf(movies.getVoteCount()));
-        Glide.with(this)
-                .load(Constants.BACKDROP_URL + movies.getBackdropPath())
-                .into(detailItemBinding.detailTop.imgBackdrop);
-        Glide.with(this)
-                .load(Constants.POSTER_URL + movies.getPosterPath())
-                .into(detailItemBinding.detailTop.imgPoster);
-
-        //Bottom
-        detailItemBinding.detailBottom.tvOverview.setText(movies.getOverview());
+        isTVFavorite(tvShow.getId());
     }
 
     @Override
@@ -94,22 +72,44 @@ public class MovieDetailFragment extends Fragment {
         if (id == R.id.favorite) {
             if (isFavorite) {
                 item.setIcon(R.drawable.ic_favorite_border);
-                deleteFromFavorite(movies.getId());
+                deleteFromFavorite(tvShow.getId());
                 isFavorite = false;
             } else {
                 item.setIcon(R.drawable.ic_favorite);
-                addToFavorite(movies);
+                addToFavorite(tvShow);
                 isFavorite = true;
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void addToFavorite(MovieResponse.Results movie) {
-        MovieDao movieDao = tmDb.movieDao();
+    private void getTVDetail(){
+        detailItemBinding.pbDetail.setVisibility(View.VISIBLE);
+        Bundle bundle = getArguments();
+        tvShow = bundle.getParcelable(TV_KEY);
+        detailItemBinding.pbDetail.setVisibility(View.GONE);
+
+        //Top
+        detailItemBinding.detailTop.titleSection.tvTitle.setText(tvShow.getName());
+        detailItemBinding.detailTop.titleSection.ratingBar.setRating(Float.parseFloat(String.valueOf(Double.valueOf(tvShow.getVoteAverage() / 2))));
+        detailItemBinding.detailTop.titleSection.chipPopularity.setText(String.valueOf(tvShow.getPopularity()));
+        detailItemBinding.detailTop.titleSection.chipVote.setText(String.valueOf(tvShow.getVoteCount()));
+        Glide.with(this)
+                .load(Constants.BACKDROP_URL + tvShow.getBackdropPath())
+                .into(detailItemBinding.detailTop.imgBackdrop);
+        Glide.with(this)
+                .load(Constants.POSTER_URL + tvShow.getPosterPath())
+                .into(detailItemBinding.detailTop.imgPoster);
+
+        //Bottom
+        detailItemBinding.detailBottom.tvOverview.setText(tvShow.getOverview());
+    }
+
+    private void addToFavorite(TVShowResponse.Results tvShow) {
+        TVShowDao tvShowDao = tmDb.tvShowDao();
         try {
-            movieDao.insertMovie(movie);
-            Toast.makeText(getActivity(), "Add Movie to Favorite", Toast.LENGTH_LONG).show();
+            tvShowDao.insertTV(tvShow);
+            Toast.makeText(getActivity(), "Add TV to Favorite", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("addError", e.getMessage());
@@ -117,20 +117,20 @@ public class MovieDetailFragment extends Fragment {
     }
 
     private void deleteFromFavorite(int id) {
-        MovieDao movieDao = tmDb.movieDao();
+        TVShowDao tvShowDao = tmDb.tvShowDao();
         try {
-            movieDao.deleteMovieById(id);
-            Toast.makeText(getActivity(), "Delete Movie from Favorite", Toast.LENGTH_LONG).show();
+            tvShowDao.deleteTVById(id);
+            Toast.makeText(getActivity(), "Delete TV from Favorite", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("deleteError", e.getMessage());
         }
     }
 
-    private void isMovieFavorite(int id) {
-        MovieDao movieDao = tmDb.movieDao();
+    private void isTVFavorite(int id) {
+        TVShowDao tvShowDao = tmDb.tvShowDao();
         try {
-            int count = movieDao.movieById(id);
+            int count = tvShowDao.tvById(id);
 
             if (count == 0) {
                 isFavorite = false;

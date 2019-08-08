@@ -1,4 +1,4 @@
-package id.afdaldev.moviecatalogueapi.ui.tv;
+package id.afdaldev.moviecatalogueapi.ui.tvshow;
 
 
 import android.os.Bundle;
@@ -56,8 +56,8 @@ public class TVFragment extends Fragment {
             @Override
             public void onChanged(TVShowResponse tvShowResponse) {
                 tvList.addAll(tvShowResponse.getResults());
-                showLoading(false);
                 adapter.notifyDataSetChanged();
+                showLoading(false);
             }
         });
     }

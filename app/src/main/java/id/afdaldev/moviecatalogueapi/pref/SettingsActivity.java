@@ -1,4 +1,4 @@
-package id.afdaldev.moviecatalogueapi.settings;
+package id.afdaldev.moviecatalogueapi.pref;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;

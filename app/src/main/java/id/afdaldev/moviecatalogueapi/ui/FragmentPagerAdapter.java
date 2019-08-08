@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import id.afdaldev.moviecatalogueapi.R;
+import id.afdaldev.moviecatalogueapi.ui.movie.MovieFavoriteFragment;
 import id.afdaldev.moviecatalogueapi.ui.movie.MoviesFragment;
-import id.afdaldev.moviecatalogueapi.ui.tv.TVFragment;
+import id.afdaldev.moviecatalogueapi.ui.tvshow.TVFragment;
+import id.afdaldev.moviecatalogueapi.ui.tvshow.TVShowFavoriteFragment;
 
 public class FragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAdapter {
 
@@ -26,13 +28,17 @@ public class FragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAda
                 return new MoviesFragment();
             case 1:
                 return new TVFragment();
+            case 2:
+                return new MovieFavoriteFragment();
+            case 3:
+                return new TVShowFavoriteFragment();
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 4;
     }
 
     @Nullable
@@ -43,6 +49,10 @@ public class FragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAda
                 return context.getString(R.string.movies);
             case 1:
                 return context.getString(R.string.tv_show);
+            case 2:
+                return context.getString(R.string.favorite_movies);
+            case 3:
+                return context.getString(R.string.favorite_tv_show);
         }
         return null;
     }
