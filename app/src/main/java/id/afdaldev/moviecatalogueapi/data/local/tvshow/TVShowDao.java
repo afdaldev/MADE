@@ -22,5 +22,5 @@ public interface TVShowDao {
     int tvById(int id);
 
     @Query("DELETE FROM tv_show WHERE id = :id")
-    int deleteTVById(int id);
+    void deleteTVById(int id);
 }

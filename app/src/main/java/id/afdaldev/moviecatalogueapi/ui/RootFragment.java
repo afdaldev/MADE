@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -26,11 +27,9 @@ public class RootFragment extends Fragment {
 
     private FragmentRootBinding fragmentRootBinding;
 
-
     public static RootFragment rootFragment() {
         return new RootFragment();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +37,7 @@ public class RootFragment extends Fragment {
         fragmentRootBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_root, container, false);
         initView();
         setHasOptionsMenu(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Movie Catalogue");
         return fragmentRootBinding.getRoot();
     }
 

@@ -38,16 +38,16 @@ public class TVDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         detailItemBinding = DataBindingUtil.inflate(inflater, R.layout.detail_item, container, false);
-
-        tmDb = TmDb.getDatabase(getActivity());
-        getTVDetail();
-        setHasOptionsMenu(true);
         return detailItemBinding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tmDb = TmDb.getDatabase(getActivity());
+        
+        getTVDetail();
+        setHasOptionsMenu(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(tvShow.getName());
 
         isTVFavorite(tvShow.getId());
