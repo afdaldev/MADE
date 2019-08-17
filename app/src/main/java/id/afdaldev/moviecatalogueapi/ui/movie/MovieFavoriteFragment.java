@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,6 +16,8 @@ import java.util.List;
 import id.afdaldev.moviecatalogueapi.R;
 import id.afdaldev.moviecatalogueapi.data.model.MovieResponse;
 import id.afdaldev.moviecatalogueapi.databinding.FragmentMainBinding;
+import id.afdaldev.moviecatalogueapi.ui.adapter.MovieAdapter;
+import id.afdaldev.moviecatalogueapi.viewmodel.MovieViewModel;
 
 public class MovieFavoriteFragment extends Fragment {
 

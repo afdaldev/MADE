@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import id.afdaldev.moviecatalogueapi.common.Constants;
 import id.afdaldev.moviecatalogueapi.data.local.TmDb;
 import id.afdaldev.moviecatalogueapi.data.local.tvshow.TVShowDao;
 import id.afdaldev.moviecatalogueapi.data.model.TVShowResponse;
@@ -22,12 +23,13 @@ public class TVRepository {
     public TVRepository() {
     }
 
-    public MutableLiveData<TVShowResponse> getTV(Context context){
+    public MutableLiveData<TVShowResponse> getTV(Context context) {
         final MutableLiveData<TVShowResponse> tvShow = new MutableLiveData<>();
-        Service.getAPI().getTV("e88b2c06ed7e7674f2f912d812290a70", LanguagePref.getSettings(context)).enqueue(new Callback<TVShowResponse>() {
+        Service.getAPI().getTV(Constants.API_KEY,
+                LanguagePref.getSettings(context)).enqueue(new Callback<TVShowResponse>() {
             @Override
             public void onResponse(Call<TVShowResponse> call, Response<TVShowResponse> response) {
-                if (response.body() != null){
+                if (response.body() != null) {
                     tvShow.setValue(response.body());
                 }
             }
@@ -40,7 +42,7 @@ public class TVRepository {
         return tvShow;
     }
 
-    public LiveData<List<TVShowResponse.Results>> getallTVFromLocal(Context context){
+    public LiveData<List<TVShowResponse.Results>> getallTVFromLocal(Context context) {
         LiveData<List<TVShowResponse.Results>> getTVFromLocal;
         TmDb tmDb = TmDb.getDatabase(context);
         TVShowDao tvShowDao = tmDb.tvShowDao();

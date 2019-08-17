@@ -8,13 +8,29 @@ import retrofit2.http.Query;
 
 public interface APIEndPoint {
 
+    String API_KEY = "api_key";
+    String LANGUAGE = "language";
+    String QUERY = "query";
+
     @GET("discover/movie")
     Call<MovieResponse> getMovies(
-            @Query("api_key") String apiKey,
-            @Query("language") String language);
+            @Query(API_KEY) String apiKey,
+            @Query(LANGUAGE) String language);
+
+    @GET("search/movie")
+    Call<MovieResponse> getMoviesSearch(
+            @Query(API_KEY) String apiKey,
+            @Query(LANGUAGE) String language,
+            @Query(QUERY) String querySearch);
 
     @GET("discover/tv")
     Call<TVShowResponse> getTV(
-            @Query("api_key") String apiKey,
-            @Query("language") String language);
+            @Query(API_KEY) String apiKey,
+            @Query(LANGUAGE) String language);
+
+    @GET("search/tv")
+    Call<TVShowResponse> getTVSearch(
+            @Query(API_KEY) String apiKey,
+            @Query(LANGUAGE) String language,
+            @Query(QUERY) String querySearch);
 }

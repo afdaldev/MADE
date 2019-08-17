@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import id.afdaldev.moviecatalogueapi.common.Constants;
 import id.afdaldev.moviecatalogueapi.data.local.TmDb;
 import id.afdaldev.moviecatalogueapi.data.local.movie.MovieDao;
 import id.afdaldev.moviecatalogueapi.data.model.MovieResponse;
@@ -25,7 +26,8 @@ public class MovieRepository {
 
     public MutableLiveData<MovieResponse> getMovies(Context context) {
         final MutableLiveData<MovieResponse> movies = new MutableLiveData<>();
-        Service.getAPI().getMovies("e88b2c06ed7e7674f2f912d812290a70", LanguagePref.getSettings(context)).enqueue(new Callback<MovieResponse>() {
+        Service.getAPI().getMovies(Constants.API_KEY,
+                LanguagePref.getSettings(context)).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if (response.body() != null) {

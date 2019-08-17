@@ -2,7 +2,9 @@ package id.afdaldev.moviecatalogueapi.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.BaseColumns;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -12,38 +14,11 @@ import java.util.List;
 
 public class TVShowResponse {
 
-    @SerializedName("page")
-    private int page;
-    @SerializedName("total_results")
-    private int totalResults;
-    @SerializedName("total_pages")
-    private int totalPages;
+    public static final String TABLE_NAME = "tv_show";
+    public static final String COLUMNS_ID = BaseColumns._ID;
+
     @SerializedName("results")
     private List<Results> results;
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getTotalResults() {
-        return totalResults;
-    }
-
-    public void setTotalResults(int totalResults) {
-        this.totalResults = totalResults;
-    }
-
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
-    }
 
     public List<Results> getResults() {
         return results;
@@ -53,39 +28,34 @@ public class TVShowResponse {
         this.results = results;
     }
 
-    @Entity(tableName = "tv_show")
+    @Entity(tableName = TABLE_NAME)
     public static class Results implements Parcelable {
 
-        @SerializedName("original_name")
-        private String originalName;
+        @SerializedName("id")
+        @PrimaryKey
+        @ColumnInfo(name = COLUMNS_ID)
+        private int id;
         @SerializedName("name")
         private String name;
         @SerializedName("popularity")
         private double popularity;
         @SerializedName("vote_count")
         private int voteCount;
-        @SerializedName("first_air_date")
-        private String firstAirDate;
-        @SerializedName("backdrop_path")
-        private String backdropPath;
-        @SerializedName("original_language")
-        private String originalLanguage;
-        @SerializedName("id")
-        @PrimaryKey
-        private int id;
         @SerializedName("vote_average")
         private double voteAverage;
-        @SerializedName("overview")
-        private String overview;
         @SerializedName("poster_path")
         private String posterPath;
+        @SerializedName("backdrop_path")
+        private String backdropPath;
+        @SerializedName("overview")
+        private String overview;
 
-        public String getOriginalName() {
-            return originalName;
+        public int getId() {
+            return id;
         }
 
-        public void setOriginalName(String originalName) {
-            this.originalName = originalName;
+        public void setId(int id) {
+            this.id = id;
         }
 
         public String getName() {
@@ -112,52 +82,12 @@ public class TVShowResponse {
             this.voteCount = voteCount;
         }
 
-        public String getFirstAirDate() {
-            return firstAirDate;
-        }
-
-        public void setFirstAirDate(String firstAirDate) {
-            this.firstAirDate = firstAirDate;
-        }
-
-        public String getBackdropPath() {
-            return backdropPath;
-        }
-
-        public void setBackdropPath(String backdropPath) {
-            this.backdropPath = backdropPath;
-        }
-
-        public String getOriginalLanguage() {
-            return originalLanguage;
-        }
-
-        public void setOriginalLanguage(String originalLanguage) {
-            this.originalLanguage = originalLanguage;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
         public double getVoteAverage() {
             return voteAverage;
         }
 
         public void setVoteAverage(double voteAverage) {
             this.voteAverage = voteAverage;
-        }
-
-        public String getOverview() {
-            return overview;
-        }
-
-        public void setOverview(String overview) {
-            this.overview = overview;
         }
 
         public String getPosterPath() {
@@ -168,6 +98,22 @@ public class TVShowResponse {
             this.posterPath = posterPath;
         }
 
+        public String getBackdropPath() {
+            return backdropPath;
+        }
+
+        public void setBackdropPath(String backdropPath) {
+            this.backdropPath = backdropPath;
+        }
+
+        public String getOverview() {
+            return overview;
+        }
+
+        public void setOverview(String overview) {
+            this.overview = overview;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -175,34 +121,28 @@ public class TVShowResponse {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.originalName);
+            dest.writeInt(this.id);
             dest.writeString(this.name);
             dest.writeDouble(this.popularity);
             dest.writeInt(this.voteCount);
-            dest.writeString(this.firstAirDate);
-            dest.writeString(this.backdropPath);
-            dest.writeString(this.originalLanguage);
-            dest.writeInt(this.id);
             dest.writeDouble(this.voteAverage);
-            dest.writeString(this.overview);
             dest.writeString(this.posterPath);
+            dest.writeString(this.backdropPath);
+            dest.writeString(this.overview);
         }
 
         public Results() {
         }
 
         protected Results(Parcel in) {
-            this.originalName = in.readString();
+            this.id = in.readInt();
             this.name = in.readString();
             this.popularity = in.readDouble();
             this.voteCount = in.readInt();
-            this.firstAirDate = in.readString();
-            this.backdropPath = in.readString();
-            this.originalLanguage = in.readString();
-            this.id = in.readInt();
             this.voteAverage = in.readDouble();
-            this.overview = in.readString();
             this.posterPath = in.readString();
+            this.backdropPath = in.readString();
+            this.overview = in.readString();
         }
 
         public static final Parcelable.Creator<Results> CREATOR = new Parcelable.Creator<Results>() {

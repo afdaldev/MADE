@@ -1,72 +1,82 @@
 package id.afdaldev.moviecatalogueapi.ui.tvshow;
 
-
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.databinding.DataBindingUtil;
 
 import id.afdaldev.moviecatalogueapi.R;
-import id.afdaldev.moviecatalogueapi.data.model.TVShowResponse;
-import id.afdaldev.moviecatalogueapi.databinding.FragmentMainBinding;
+import id.afdaldev.moviecatalogueapi.ui.BaseFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class TVFragment extends Fragment {
+public class TVFragment extends BaseFragment {
 
-    private FragmentMainBinding fragmentMainBinding;
-    private TVAdapter adapter;
-    private List<TVShowResponse.Results> tvList = new ArrayList<>();
-
-
-    public TVFragment() {
-        // Required empty public constructor
-    }
-
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        fragmentMainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
-        adapter = new TVAdapter(tvList);
-        fragmentMainBinding.rvMovies.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        fragmentMainBinding.rvMovies.setAdapter(adapter);
-        return fragmentMainBinding.getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mFragment = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+        setHasOptionsMenu(true);
+        return mFragment.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        showLoading(true);
-        TVViewModel tvViewModel = ViewModelProviders.of(this).get(TVViewModel.class);
-        tvViewModel.init(getActivity());
-        tvViewModel.getTV().observe(this, new Observer<TVShowResponse>() {
-            @Override
-            public void onChanged(TVShowResponse tvShowResponse) {
-                tvList.addAll(tvShowResponse.getResults());
-                adapter.notifyDataSetChanged();
-                showLoading(false);
-            }
-        });
+        tvView();
+        tvData();
     }
 
-    private void showLoading(Boolean state){
-        if (state){
-            fragmentMainBinding.progressBar.setVisibility(View.VISIBLE);
-        } else {
-            fragmentMainBinding.progressBar.setVisibility(View.GONE);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+        searchMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        menuItemSelected(item);
+        return super.onOptionsItemSelected(item);
+    }
+
+    private SearchView searchView = null;
+
+    private void searchMenu(Menu menu) {
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+            searchView.setQueryHint(getResources().getString(R.string.search));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    searchTVData(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (newText.isEmpty()) {
+                        return false;
+                    } else {
+                        searchTVData(newText);
+                    }
+                    return true;
+                }
+            });
         }
     }
 }

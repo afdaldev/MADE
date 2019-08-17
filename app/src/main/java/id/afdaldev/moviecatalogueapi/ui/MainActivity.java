@@ -8,12 +8,12 @@ import id.afdaldev.moviecatalogueapi.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding activityMainBinding;
+    ActivityMainBinding mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mActivity = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction()

@@ -1,67 +1,85 @@
 package id.afdaldev.moviecatalogueapi.ui.movie;
-import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.databinding.DataBindingUtil;
+
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Toast;
 
 import id.afdaldev.moviecatalogueapi.R;
-import id.afdaldev.moviecatalogueapi.data.model.MovieResponse;
-import id.afdaldev.moviecatalogueapi.databinding.FragmentMainBinding;
+import id.afdaldev.moviecatalogueapi.ui.BaseFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends BaseFragment {
 
-    private FragmentMainBinding fragmentMainBinding;
-    private MovieAdapter adapter;
-    private List<MovieResponse.Results> movieList = new ArrayList<>();
-
-
-    public MoviesFragment() {
-    }
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        fragmentMainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
-        adapter = new MovieAdapter(movieList);
-        fragmentMainBinding.rvMovies.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        fragmentMainBinding.rvMovies.setAdapter(adapter);
-        return fragmentMainBinding.getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mFragment = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+        setHasOptionsMenu(true);
+        return mFragment.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        showLoading(true);
-        MovieViewModel movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        movieViewModel.init(getActivity());
-        movieViewModel.getMovies().observe(this, new Observer<MovieResponse>() {
-            @Override
-            public void onChanged(MovieResponse movieResponse) {
-                movieList.addAll(movieResponse.getResults());
-                adapter.notifyDataSetChanged();
-                showLoading(false);
-            }
-        });
+        movieView();
+        movieData();
     }
 
-    private void showLoading(Boolean state){
-        if (state){
-            fragmentMainBinding.progressBar.setVisibility(View.VISIBLE);
-        } else {
-            fragmentMainBinding.progressBar.setVisibility(View.GONE);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+        searchMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        menuItemSelected(item);
+        return super.onOptionsItemSelected(item);
+    }
+
+    private SearchView searchView = null;
+
+    private void searchMenu(Menu menu) {
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+            searchView.setQueryHint(getResources().getString(R.string.search));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    searchMovieData(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (newText.isEmpty()){
+                        return false;
+                    } else {
+                        searchMovieData(newText);
+                    }
+                    return true;
+                }
+            });
         }
     }
 }

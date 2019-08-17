@@ -1,4 +1,4 @@
-package id.afdaldev.moviecatalogueapi.ui.movie;
+package id.afdaldev.moviecatalogueapi.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,35 +22,35 @@ import java.util.List;
 
 import id.afdaldev.moviecatalogueapi.R;
 import id.afdaldev.moviecatalogueapi.common.Constants;
-import id.afdaldev.moviecatalogueapi.data.model.MovieResponse;
+import id.afdaldev.moviecatalogueapi.data.model.TVShowResponse;
 import id.afdaldev.moviecatalogueapi.databinding.ListItemBinding;
+import id.afdaldev.moviecatalogueapi.ui.tvshow.TVDetailFragment;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
 
-    private List<MovieResponse.Results> movieResponseList;
+    private List<TVShowResponse.Results> tvResponseList;
     private Context context;
 
-    public MovieAdapter(List<MovieResponse.Results> movieResponseList) {
-        this.movieResponseList = movieResponseList;
+    public TVAdapter(List<TVShowResponse.Results> tvResponseList) {
+        this.tvResponseList = tvResponseList;
     }
 
     @NonNull
     @Override
-    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
-        return new MovieViewHolder(view);
+        return new TVViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MovieViewHolder holder, int position) {
-        final MovieResponse.Results movieResponse = movieResponseList.get(position);
-
-        holder.listItemBinding.tvTitle.setText(movieResponse.getTitle());
+    public void onBindViewHolder(@NonNull final TVViewHolder holder, int position) {
+        final TVShowResponse.Results tvResponse = tvResponseList.get(position);
+        holder.listItemBinding.tvTitle.setText(tvResponse.getName());
         Glide.with(context)
                 .asBitmap()
-                .load(Constants.POSTER_URL + movieResponse.getPosterPath())
-                .into(new BitmapImageViewTarget(holder.listItemBinding.imgPoster){
+                .load(Constants.POSTER_URL + tvResponse.getPosterPath())
+                .into(new BitmapImageViewTarget(holder.listItemBinding.imgPoster) {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         super.onResourceReady(resource, transition);
@@ -68,14 +68,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+                TVDetailFragment tvDetailFragment = new TVDetailFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable(MovieDetailFragment.MOVIE_KEY, movieResponse);
-                movieDetailFragment.setArguments(bundle);
+                bundle.putParcelable(TVDetailFragment.TV_KEY, tvResponse);
+                tvDetailFragment.setArguments(bundle);
 
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 activity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, movieDetailFragment)
+                        .replace(R.id.fragment_container, tvDetailFragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -84,14 +84,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return movieResponseList.size();
+        return tvResponseList.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class TVViewHolder extends RecyclerView.ViewHolder {
 
         ListItemBinding listItemBinding;
 
-        public MovieViewHolder(@NonNull View itemView) {
+        public TVViewHolder(@NonNull View itemView) {
             super(itemView);
             listItemBinding = DataBindingUtil.bind(itemView);
         }

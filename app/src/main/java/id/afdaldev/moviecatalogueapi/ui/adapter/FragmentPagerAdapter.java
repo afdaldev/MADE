@@ -1,4 +1,4 @@
-package id.afdaldev.moviecatalogueapi.ui;
+package id.afdaldev.moviecatalogueapi.ui.adapter;
 
 import android.content.Context;
 

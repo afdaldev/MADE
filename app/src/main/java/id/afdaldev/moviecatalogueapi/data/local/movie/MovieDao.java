@@ -11,16 +11,16 @@ import id.afdaldev.moviecatalogueapi.data.model.MovieResponse;
 
 @Dao
 public interface MovieDao {
-    
+
     @Insert
     void insertMovie(MovieResponse.Results movie);
 
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM " + MovieResponse.TABLE_NAME)
     LiveData<List<MovieResponse.Results>> getAllMovies();
 
-    @Query("SELECT COUNT(*) FROM movie WHERE id = :id")
+    @Query("SELECT COUNT(*) FROM " + MovieResponse.TABLE_NAME + " WHERE " + MovieResponse.COLUMN_ID + " = :id")
     int movieById(int id);
 
-    @Query("DELETE FROM movie WHERE id = :id")
+    @Query("DELETE FROM " + MovieResponse.TABLE_NAME + " WHERE " + MovieResponse.COLUMN_ID + " = :id")
     void deleteMovieById(int id);
 }

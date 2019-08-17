@@ -15,12 +15,12 @@ public interface TVShowDao {
     @Insert
     void insertTV(TVShowResponse.Results tv);
 
-    @Query("SELECT * FROM tv_show")
+    @Query("SELECT * FROM " + TVShowResponse.TABLE_NAME)
     LiveData<List<TVShowResponse.Results>> getAllTV();
 
-    @Query("SELECT COUNT(*) FROM tv_show WHERE id = :id")
+    @Query("SELECT COUNT(*) FROM " + TVShowResponse.TABLE_NAME + " WHERE " + TVShowResponse.COLUMNS_ID + " = :id")
     int tvById(int id);
 
-    @Query("DELETE FROM tv_show WHERE id = :id")
+    @Query("DELETE FROM " + TVShowResponse.TABLE_NAME + " WHERE " + TVShowResponse.COLUMNS_ID + " = :id")
     void deleteTVById(int id);
 }

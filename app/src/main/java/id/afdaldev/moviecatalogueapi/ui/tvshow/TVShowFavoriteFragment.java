@@ -19,6 +19,8 @@ import java.util.List;
 import id.afdaldev.moviecatalogueapi.R;
 import id.afdaldev.moviecatalogueapi.data.model.TVShowResponse;
 import id.afdaldev.moviecatalogueapi.databinding.FragmentMainBinding;
+import id.afdaldev.moviecatalogueapi.ui.adapter.TVAdapter;
+import id.afdaldev.moviecatalogueapi.viewmodel.TVViewModel;
 
 public class TVShowFavoriteFragment extends Fragment {
 

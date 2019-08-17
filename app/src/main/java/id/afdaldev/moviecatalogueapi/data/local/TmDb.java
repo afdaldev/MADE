@@ -11,7 +11,7 @@ import id.afdaldev.moviecatalogueapi.data.local.tvshow.TVShowDao;
 import id.afdaldev.moviecatalogueapi.data.model.MovieResponse;
 import id.afdaldev.moviecatalogueapi.data.model.TVShowResponse;
 
-@Database(entities = {MovieResponse.Results.class, TVShowResponse.Results.class}, version = 2, exportSchema = false)
+@Database(entities = {MovieResponse.Results.class, TVShowResponse.Results.class}, version = 4, exportSchema = false)
 public abstract class TmDb extends RoomDatabase {
 
     private static volatile TmDb INSTANCE;
